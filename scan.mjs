@@ -207,7 +207,8 @@ function appendToPipeline(offers) {
     const nextSection = text.indexOf('\n## ', afterMarker);
     const insertAt = nextSection === -1 ? text.length : nextSection;
 
-    const block = '\n' + offers.map(o =>
+    const date = new Date().toISOString().slice(0, 10);
+    const block = `\n\n### Scan ${date} (${offers.length} new)\n\n` + offers.map(o =>
       `- [ ] ${o.url} | ${o.company} | ${o.title}`
     ).join('\n') + '\n';
     text = text.slice(0, insertAt) + block + text.slice(insertAt);

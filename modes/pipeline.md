@@ -23,13 +23,25 @@ Procesa URLs de ofertas acumuladas en `data/pipeline.md`. El usuario agrega URLs
 ```markdown
 ## Pendientes
 - [ ] https://jobs.example.com/posting/123
-- [ ] https://boards.greenhouse.io/company/jobs/456 | Company Inc | Senior PM
+- [ ] https://boards.greenhouse.io/company/jobs/456 | Company Inc | Senior PM | 3d
 - [!] https://private.url/job — Error: login required
 
 ## Procesadas
 - [x] #143 | https://jobs.example.com/posting/789 | Acme Corp | AI PM | 4.2/5 | PDF ✅
 - [x] #144 | https://boards.greenhouse.io/xyz/jobs/012 | BigCo | SA | 2.1/5 | PDF ❌
 ```
+
+### Campo "días listado" (days listed)
+
+Cuando el usuario agrega una URL con información de antigüedad, incluir `| Xd` al final (ej. `| 3d`, `| 14d`, `| 30d`).
+
+**Cómo obtener el valor:**
+1. **Desde la URL de la oferta** — muchos portales muestran "Posted 5 days ago" o fecha de publicación en el JD → leer con `browser_snapshot` al procesar.
+2. **Detector automático al procesar** — durante el pipeline, si se detecta la fecha de publicación en el JD, añadirla al campo al mover la entrada a "Procesadas".
+3. **Manual** — el usuario puede añadirlo al pegar la URL: `URL | Company | Role | 7d`.
+4. **Desconocido** — si no está disponible, omitir el campo o usar `| ?d`.
+
+**Por qué importa:** Ofertas con más de 30 días tienen mayor riesgo de estar cubiertas. Priorizar las más recientes.
 
 ## Detección inteligente de JD desde URL
 
